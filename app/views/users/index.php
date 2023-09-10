@@ -23,7 +23,7 @@ ob_start();
 		<tr>
 			<th><?php echo $user['id']; ?></th>
 			<td><?php echo $user['username']; ?></td>
-			<td><?php echo $user['email'] ? 'Yes' : 'No'; ?></td>
+			<td><?php echo $user['email']; ?></td>
 			<td><?php echo $user['email_verification'] ? 'Yes' : 'No'; ?></td>
 			<td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
 			<td><?php echo $user['role']; ?></td>
