@@ -3,8 +3,6 @@ $title = 'Create role';
 ob_start();
 ?>
 
-<h1>Create role</h1>
-
 <div class="row justify-content-center mt-5">
     <div class="col-lg-6 col-md-8 col-sm-10">
         <h1 class="text-center mb-4">Create role</h1>

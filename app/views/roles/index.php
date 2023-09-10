@@ -4,8 +4,9 @@ ob_start();
 ?>
 
 <div class="row justify-content-center mt-5">
-    <div class="col-lg-6 col-md-8 col-sm-10">
-        <h1 class="text-center mb-4">Roles list</h1>
+
+        <h1 class="mb-4">Roles list</h1>
+        <a href="index.php?page=roles&action=create" class="btn btn-success">Create role</a>
         <table class="table">
             <thead>
                 <tr>
@@ -40,7 +41,7 @@ ob_start();
                     <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
+
 </div>
 
 <?php $content = ob_get_clean();
