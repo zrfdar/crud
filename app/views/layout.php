@@ -20,6 +20,12 @@
                         <a class="nav-link" href="index.php?page=users">Users</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=roles">All roles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=roles&action=create">Create role</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?page=register">Register</a>
                     </li>
                     <li class="nav-item">

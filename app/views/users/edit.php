@@ -17,10 +17,9 @@ ob_start();
     <div class="mb-3">
         <label for="role" class="form-label">Role</label>
         <select class="form-control" id="role" name="role">
-            <option value="0" <?php echo $user['role'] == 0 ? 'selected' : ''; ?>>User</option>
-            <option value="1" <?php echo $user['role'] == 1 ? 'selected' : ''; ?>>Content Creator</option>
-            <option value="2" <?php echo $user['role'] == 2 ? 'selected' : ''; ?>>Editor</option>
-            <option value="3" <?php echo $user['role'] == 3 ? 'selected' : ''; ?>>Admin</option>
+            <?php foreach($roles as $role): ?>
+            <option value="<?php echo $role['id']; ?>" <?php echo $user['role'] == $role['id'] ? 'selected' : ''; ?>><?php echo $role['role_name']; ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>

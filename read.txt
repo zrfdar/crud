@@ -1,0 +1,6 @@
+Roles list:
+1/ Администратор (Administrator)
+2/ Редактор (Editor)
+3/ Автор (Author)
+4/ Пользователь (Contributor)
+5/ Абонент (Subscriber)
