@@ -1,5 +1,7 @@
 <?php
-require_once 'app/models/roles/Role.php';
+namespace controllers\roles;
+
+use models\roles\Role;
 
 class RoleController{
 	public function index(){

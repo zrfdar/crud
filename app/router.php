@@ -1,122 +1,51 @@
 <?php
+namespace app;
+use controllers\auth\AuthController;
+use controllers\home\HomeController;
+use controllers\pages\PageController;
+use controllers\roles\RoleController;
+use controllers\users\UsersController;
+
 class Router
 {
+    //определяем маршруты при помощи регулярки
+    private $routes = [
+        '/^\/' . APP_BASE_PATH . '\/?$/' => ['controller' => 'home\\HomeController', 'action' => 'index'],
+        '/^\/' . APP_BASE_PATH . '\/users(\/(?P<action>[a-z]+)(\/(?P<id>\d+))?)?$/' => ['controller' => 'users\\UsersController'],
+    ]; // /crud/users/edit/123
+
     public function run()
     {
-        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-        switch ($page) {
-            case '':
-            case 'home':
-                $controller = new HomeController();
-                $controller->index();
+        $uri = $_SERVER['REQUEST_URI'];
+        $controller = null;
+        $action = null;
+        $params = null;
+        //Пробегаем по маршрутам пока не найдем нужный
+        foreach ($this->routes as $pattern => $route){
+            //Ищем маршрут идентичный URI
+            if (preg_match($pattern, $uri, $matches)){
+                //Получаем имя контроллера с маршрута
+                $controller = "controllers\\" . $route['controller'];
+                //Получаем действие из маршрута если оно есть
+                $action = $route['action'] ?? $matches['action'] ?? 'index';
+                // Получаем параметры из совпавших с регуляркой
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                // Прерываем цикл если находим маршрут
                 break;
-            case 'users':
-                $controller = new UsersController();
-                if (isset($_GET['action'])) {
-                    switch ($_GET['action']) {
-                        case 'create':
-                            $controller->create();
-                            break;
-                        case 'store':
-                            $controller->store();
-                            break;
-                        case 'delete':
-                            $controller->delete();
-                            break;
-                        case 'edit':
-                            $controller->edit();
-                            break;
-                        case 'update';
-                            $controller->update();
-                            break;
-                    }
-                } else {
-                    $controller->index();
-                }
-                break;
-                case 'roles':
-                    $controller = new RoleController();
-                    if (isset($_GET['action'])) {
-                        switch ($_GET['action']) {
-                            case 'create':
-                                $controller->create();
-                                break;
-                            case 'store':
-                                $controller->store();
-                                break;
-                            case 'delete':
-                                $controller->delete();
-                                break;
-                            case 'edit':
-                                $controller->edit($_GET['id']);
-                                break;
-                            case 'update';
-                                $controller->update();
-                                break;
-                        }
-                    } else {
-                        $controller->index();
-                    }
-                    break;
-                    case 'pages':
-                        $controller = new PageController();
-                        if (isset($_GET['action'])) {
-                            switch ($_GET['action']) {
-                                case 'create':
-                                    $controller->create();
-                                    break;
-                                case 'store':
-                                    $controller->store();
-                                    break;
-                                case 'delete':
-                                    $controller->delete();
-                                    break;
-                                case 'edit':
-                                    $controller->edit($_GET['id']);
-                                    break;
-                                case 'update';
-                                    $controller->update();
-                                    break;
-                            }
-                        } else {
-                            $controller->index();
-                        }
-                        break;
-            case 'register':
-                $controller = new AuthController();
-                $controller->register();
-                break;
-            case 'login':
-                $controller = new AuthController();
-                $controller->login();
-                break;
-            case 'authenticate':
-                $controller = new AuthController();
-                $controller->authenticate();
-                break;
-            case 'logout':
-                $controller = new AuthController();
-                $controller->logout();
-                break;
-            case 'auth':
-                $controller = new AuthController();
-                if (isset($_GET['action'])) {
-                    switch ($_GET['action']) {
-                        case 'store':
-                            $controller->store();
-                            break;
-                        case 'authenticate':
-                            $controller->authenticate();
-                            break;
-                    }
-                } else {
-                    $controller->login();
-                }
-                break;
-            default:
-                http_response_code(404);
-                echo "Page not Found!";
-                break;
+            }
         }
+
+        if(!$controller){
+            http_response_code(404);
+            echo "Page not fount!";
+            return;
+        }
+        $controllerInstance = new $controller();
+        if(!method_exists($controllerInstance, $action)){
+            http_response_code(404);
+            echo "Page not fount!";
+            return;
+        }
+        call_user_func_array([$controllerInstance, $action], [$params]);
     }
 }

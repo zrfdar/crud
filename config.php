@@ -1,10 +1,23 @@
 <?php
 
-return [
-	'db_pass' => '',
-	'db_host' => 'localhost',
-	'db_user' => 'root',
-	'db_name' => 'crm_for_telegram',
+function tt($str){
+	echo "<pre>";
+		print_r($str);
+	echo "</pre>";
+}
 
-	'start_role' => '1' //роль по умолчанию
-];
+function tte($str){
+	echo "<pre>";
+		print_r($str);
+	echo "</pre>";
+	exit();
+}
+
+define('APP_BASE_PATH', 'crud');
+
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'crm_for_telegram');
+
+define('START_ROLE', 1);

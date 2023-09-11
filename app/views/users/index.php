@@ -4,7 +4,7 @@ ob_start();
 ?>
 
 <h1>User list</h1>
-<a href="index.php?page=users&action=create" class="btn btn-success">Create user</a>
+<a href="/<?=APP_BASE_PATH ?>/users/create" class="btn btn-success">Create user</a>
 <thead>
 	<table class="table">
 		<tr>
@@ -21,17 +21,17 @@ ob_start();
 <tbody>
 	<?php foreach ($users as $user): ?>
 		<tr>
-			<th><?php echo $user['id']; ?></th>
-			<td><?php echo $user['username']; ?></td>
-			<td><?php echo $user['email']; ?></td>
-			<td><?php echo $user['email_verification'] ? 'Yes' : 'No'; ?></td>
-			<td><?php echo $user['is_admin'] ? 'Yes' : 'No'; ?></td>
-			<td><?php echo $user['role']; ?></td>
-			<td><?php echo $user['is_active'] ? 'Yes' : 'No'; ?></td>
-			<td><?php echo $user['last_login']; ?></td>
+			<th><?=$user['id']; ?></th>
+			<td><?=$user['username']; ?></td>
+			<td><?=$user['email']; ?></td>
+			<td><?=$user['email_verification'] ? 'Yes' : 'No'; ?></td>
+			<td><?=$user['is_admin'] ? 'Yes' : 'No'; ?></td>
+			<td><?=$user['role']; ?></td>
+			<td><?=$user['is_active'] ? 'Yes' : 'No'; ?></td>
+			<td><?=$user['last_login']; ?></td>
 			<td>
-				<a href="index.php?page=users&action=edit&id=<?php echo $user['id']; ?>" class="btn btn-primary">Edit</a>
-				<a href="index.php?page=users&action=delete&id=<?php echo $user['id']; ?>" class="btn btn-danger">Delete</a>
+				<a href="/<?=APP_BASE_PATH ?>/users/edit/<?=$user['id']; ?>" class="btn btn-primary">Edit</a>
+				<a href="/<?=APP_BASE_PATH ?>/users/delete/<?=$user['id']; ?>" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
 	<?php endforeach; ?>

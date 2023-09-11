@@ -1,4 +1,7 @@
 <?php
+namespace models\users;
+use models\Database;
+
 class User
 {
     private $db;
@@ -8,7 +11,7 @@ class User
         $this->db = Database::getInstance()->getConnection();
         try{
             $result = $this->db->query("SELECT 1 FROM `users` LIMIT 1");
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             $this->createTable();
         }
     }
@@ -39,7 +42,7 @@ class User
             $this->db->exec($roleTableQuery);
             $this->db->exec($userTableQuery);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -49,11 +52,11 @@ class User
         try{
             $stmt = $this->db->query("SELECT * FROM `users`");
             $users = [];
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            while($row = $stmt->fetch(\PDO::FETCH_ASSOC)){
                 $users[] = $row;
             }
             return $users;
-        } catch(PDOException $e){ return false; }
+        } catch(\PDOException $e){ return false; }
     }
 
     public function create($data)
@@ -70,7 +73,7 @@ class User
             $stmt = $this->db->prepare($query);
             $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT), $role, $created_at]);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -81,7 +84,7 @@ class User
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -91,8 +94,8 @@ class User
         try{
             $stmt = $this->db->prepare($query);
             $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }catch(PDOException $e){
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        }catch(\PDOException $e){
             return false;
         }
     }
@@ -109,7 +112,7 @@ class User
             $stmt = $this->db->prepare($query);
             $stmt->execute([$username, $email, $admin, $role, $is_active, $id]);
             return true;
-        }catch(PDOException $e){
+        }catch(\PDOException $e){
             return false;
         }
     }
